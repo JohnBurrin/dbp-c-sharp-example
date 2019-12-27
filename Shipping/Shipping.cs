@@ -56,7 +56,7 @@ namespace Shipping
 
         /// <summary>
         /// Gets the available services method.
-        /// See the API v14 documention for more information - https://github.com/despatchbay/api.v14/wiki/Shipping-Service
+        /// See the API v15 documention for more information - https://github.com/despatchbay/api.v15/wiki/Shipping-Service
         /// </summary>
         /// <returns>an array of ServiceType[] </returns>
         /// <param name="shipment">Shipment.</param>
