@@ -160,6 +160,10 @@ namespace Accounts
 			return PaymentMethods;
 		}
 
+		/// <summary>
+		/// Returns a list of sender addresses relating to the account.
+		/// </summary>
+		/// <returns>SenderAddressType[]</returns>
 		private static SenderAddressType[] GetSenderAddresses()
 		{
 			SenderAddressType[] SendersAddresses;
