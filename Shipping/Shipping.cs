@@ -11,22 +11,25 @@ namespace wsdlConsole
 		private static string apiendpoint;
 		private static string apiuser;
 		private static string apikey;
+        private static ShippingService Service;
 
-		/// <summary>
+        /// <summary>
         /// Gets the authorise service. Loads a XML configuration file, creates a 
-        /// Basic Auth credentioals object and applies to the Service we want to use
+        /// Basic Auth credentials object and applies to the Service we want to use
         /// </summary>
         /// <returns>The authorise service.</returns>
-		static ShippingService GetAuthoriseService ()
+        static ShippingService GetAuthoriseService()
 		{
 			// Set up some credentials
-			NetworkCredential netCredential = new NetworkCredential (apiuser, apikey);
+			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
 
-			// Create the service of type Shipping service
-			ShippingService Service = new ShippingService ();
-			Service.RequestEncoding = System.Text.Encoding.UTF8;
-			Uri uri = new Uri (Service.Url);
-			ICredentials credentials = netCredential.GetCredential (uri, "Basic");
+            // Create the service of type Shipping service
+            Service = new ShippingService
+            {
+                RequestEncoding = System.Text.Encoding.UTF8
+            };
+            Uri uri = new Uri(Service.Url);
+			ICredentials credentials = netCredential.GetCredential(uri, "Basic");
 			// Apply the credentials to the service
 			Service.Credentials = credentials;
 			return Service;
@@ -35,22 +38,23 @@ namespace wsdlConsole
 		/// <summary>
         /// Loads the configuration file and sets some static variables
         /// </summary>
-		static void LoadConfiguration ()
-		{
-			XmlDocument doc = new XmlDocument ();
-			doc.Load ("configuration.xml");
+		static void LoadConfiguration()
+        {
+			XmlDocument doc = new XmlDocument();
+			doc.Load("configuration.xml");
 
 			try {
 				XmlNode node;
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apiendpoint");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apiendpoint");
 				apiendpoint = node.InnerText;
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apiuser");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
 				apiuser = node.InnerText;
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apikey");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");
 				apikey = node.InnerText;
-			} catch (Exception ex) {
-				Console.WriteLine (ex.Message);
-			}
+			} catch(Exception ex) {
+				Console.WriteLine(ex.Message);
+                throw;
+            }
 		}
 
 
@@ -60,18 +64,18 @@ namespace wsdlConsole
         /// </summary>
         /// <returns>an array of ServiceType[] </returns>
         /// <param name="shipment">Shipment.</param>
-        static ServiceType[] GetAvailableServicesMethod (ShipmentRequestType shipment)
+        static ServiceType[] GetAvailableServicesMethod(ShipmentRequestType shipment)
 		{
 			ServiceType[] availableServices = null;
-			var Service = GetAuthoriseService ();
+			Service = GetAuthoriseService();
 			try {
 				// Call the GetDomesticServices soap service
-				availableServices = Service.GetAvailableServices (shipment);
+				availableServices = Service.GetAvailableServices(shipment);
 
-			} catch (Exception soapEx) {
-				Console.WriteLine ("{0}", soapEx.Message);
-
-			}
+			} catch(Exception soapEx) {
+				Console.WriteLine("{0}", soapEx.Message);
+                throw;
+            }
 			return availableServices;
 		}
 
@@ -83,7 +87,7 @@ namespace wsdlConsole
         static String AddShipmentMethod(ShipmentRequestType shipment)
         {
             String ShipmentID = null;
-            var Service = GetAuthoriseService();
+            Service = GetAuthoriseService();
             try
             {
                 // Call the GetDomesticServices soap service
@@ -91,10 +95,10 @@ namespace wsdlConsole
                 ShipmentID = Service.AddShipment(shipment);
                 
             }
-            catch (Exception soapEx)
+            catch(Exception soapEx)
             {
                 Console.WriteLine("{0}", soapEx.Message);
-
+                throw;
             }
             return ShipmentID;
         }
@@ -107,16 +111,17 @@ namespace wsdlConsole
         static ShipmentReturnType[] BookShipmentsMethod(String[] shipments)
         {
             ShipmentReturnType[] BookingResult = null;
-            var Service = GetAuthoriseService();
+            Service = GetAuthoriseService();
             try
             {
                 // Call the GetDomesticServices soap service
                 BookingResult = Service.BookShipments(shipments);
 
             }
-            catch (Exception soapEx)
+            catch(Exception soapEx)
             {
                 Console.WriteLine("{0}", soapEx.Message);
+                throw;
 
             }
             return BookingResult;
@@ -126,10 +131,9 @@ namespace wsdlConsole
         /// <summary>
         /// Example to Get available services, Add a shipment to the account and the book the collection
         /// </summary>
-        /// <param name="args"></param>
-        public static void Main (string[] args)
+        public static void Main()
 		{
-			LoadConfiguration ();
+			LoadConfiguration();
 
 			int count = 0;
 			ServiceType[] availableServices = null;
@@ -191,13 +195,13 @@ namespace wsdlConsole
                 Shipment.SenderAddress = SenderAddress;
                
                 // Call the service
-                availableServices = GetAvailableServicesMethod (Shipment);
+                availableServices = GetAvailableServicesMethod(Shipment);
 
 				// iterate though the list of returned services
 				count = 0;
-				foreach (ServiceType element in availableServices) {
+				foreach(ServiceType element in availableServices) {
 					count += 1;
-                    if (count == 1)
+                    if(count == 1)
                     {
                         // Manually apply the First service
                         Shipment.ServiceID = element.ServiceID;
@@ -206,7 +210,7 @@ namespace wsdlConsole
                         // if ServiceIDSpecified is Not set to true;
                         Shipment.ServiceIDSpecified = true;
                     }
-					System.Console.WriteLine ("Service id:{0} - {1} £{2}", element.ServiceID, element.Name, element.Cost);
+					System.Console.WriteLine("Service id:{0} - {1} £{2}", element.ServiceID, element.Name, element.Cost);
 				}
                 
 
@@ -232,14 +236,15 @@ namespace wsdlConsole
                 BookingResults = BookShipmentsMethod(Bookings);
                 // iterate though the list of returned services
                 count = 0;
-                foreach (ShipmentReturnType element in BookingResults)
+                foreach(ShipmentReturnType element in BookingResults)
                 {
                     count += 1;
                     System.Console.WriteLine("Service id:{0} - ShipmentID {1} - Label Url{2}", element.ServiceID,element.ShipmentID, element.LabelsURL);
                 }
-            } catch (Exception ex) {
-				Console.WriteLine (ex.Message);
-			}
+            } catch(Exception ex) {
+				Console.WriteLine(ex.Message);
+                throw;
+            }
 		}
 	}
 }

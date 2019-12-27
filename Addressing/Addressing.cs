@@ -10,21 +10,24 @@ namespace Addressing
 		private static string apiendpoint;
 		private static string apiuser;
 		private static string apikey;
+		private static AddressingService Service;
 
-        /// <summary>
-        /// Gets the authorise service. Loads a XML configuration file, creates a 
-        /// Basic Auth credentioals object and applies to the Service we want to use
-        /// </summary>
-        /// <returns>The authorise service.</returns>
-		static AddressingService GetAuthoriseService ()
+		/// <summary>
+		/// Gets the authorise service. Loads a XML configuration file, creates a 
+		/// Basic Auth credentials object and applies to the Service we want to use
+		/// </summary>
+		/// <returns>The authorise service.</returns>
+		private static AddressingService GetAuthoriseService()
 		{
 			// Set up some credentials
-			NetworkCredential netCredential = new NetworkCredential (apiuser, apikey);
+			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
 			// Create the service of type Addressing service
-			AddressingService Service = new AddressingService (apiendpoint);
-            Service.RequestEncoding = System.Text.Encoding.UTF8;
-            Uri uri = new Uri(Service.Url);
-			ICredentials credentials = netCredential.GetCredential (uri, "Basic");
+			Service = new AddressingService(apiendpoint)
+			{
+				RequestEncoding = System.Text.Encoding.UTF8
+			};
+			Uri uri = new Uri(Service.Url);
+			ICredentials credentials = netCredential.GetCredential(uri, "Basic");
 			// Apply the credentials to the service
 			Service.Credentials = credentials;
 			return Service;
@@ -33,20 +36,21 @@ namespace Addressing
         /// <summary>
         /// Loads the configuration file and sets some static variables
         /// </summary>
-		static void LoadConfiguration ()
+		static void LoadConfiguration()
 		{
-			XmlDocument doc = new XmlDocument ();
-			doc.Load ("configuration.xml");
+			XmlDocument doc = new XmlDocument();
+			doc.Load("configuration.xml");
 			XmlNode node;
 			try {
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apiendpoint");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apiendpoint");
 				apiendpoint = node.InnerText;
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apiuser");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
 				apiuser = node.InnerText;
-				node = doc.DocumentElement.SelectSingleNode ("/configuration/apikey");
+				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");
 				apikey = node.InnerText;
-			} catch (Exception ex) {
-				Console.WriteLine (ex.Message);
+			} catch(System.IO.FileNotFoundException ex) {
+				Console.WriteLine(ex.Message);
+				throw;
 			}
 		}
 
@@ -59,36 +63,38 @@ namespace Addressing
         /// <param name="place">Place.</param>
         public static AddressType FindAddressMethod(string postcode, string place)
         {
-            AddressType addressDetail = new AddressType();
-            var Service = GetAuthoriseService();
+            AddressType Address = new AddressType();
+            Service = GetAuthoriseService();
             try
             {
-                // Call the GetDomesticAddressByKey soap service
-                addressDetail = Service.FindAddress(postcode, place);
+				// Call the GetDomesticAddressByKey soap service
+				Address = Service.FindAddress(postcode, place);
             }
-            catch (Exception soapEx)
+            catch(Exception soapEx)
             {
                 Console.WriteLine("{0}", soapEx.Message);
+				throw;
             }
-            return addressDetail;
+            return Address;
         }
 
 		/// <summary>
-        /// Gets the domestic address by key method.
-        /// </summary>
-        /// <returns>The domestic address by key method.</returns>
-        /// <param name="key">Key.</param>
-        public static AddressType GetAddressByKeyMethod (string key)
+		/// Gets the domestic address by key method.
+		/// </summary>
+		/// <returns>The domestic address by key method.</returns>
+		/// <param name="key">Key.</param>
+		public static AddressType GetAddressByKeyMethod(string key)
 		{
-            AddressType addressDetail = new AddressType();
-			var Service = GetAuthoriseService ();
+            AddressType Address = new AddressType();
+			var Service = GetAuthoriseService();
 			try {
 				// Call the GetDomesticAddressByKey soap service
-				addressDetail = Service.GetAddressByKey (key);
-			} catch (Exception soapEx) {
-				Console.WriteLine ("{0}", soapEx.Message);
+				Address = Service.GetAddressByKey(key);
+			} catch(Exception soapEx) {
+				Console.WriteLine("{0}", soapEx.Message);
+				throw;
 			}
-			return addressDetail;
+			return Address;
 		}
 
 		/// <summary>
@@ -96,23 +102,22 @@ namespace Addressing
         /// </summary>
         /// <returns>The domestic address keys by postcode method.</returns>
         /// <param name="postcode">Postcode.</param>
-        public static AddressKeyType[] GetAddressKeysByPostcodeMethod (string postcode)
+        public static AddressKeyType[] GetAddressKeysByPostcodeMethod(string postcode)
 		{
-			AddressKeyType[] availableAddresses = null;
-			var Service = GetAuthoriseService ();
+			AddressKeyType[] availableAddresses;
+			Service = GetAuthoriseService();
 			try {
 				// Call the GetDomesticAddressKeysByPostcode soap service
-                availableAddresses = Service.GetAddressKeysByPostcode (postcode);
-			} catch (Exception soapEx) {
-				Console.WriteLine ("{0}", soapEx.Message);
-
+                availableAddresses = Service.GetAddressKeysByPostcode(postcode);
+			} catch(Exception soapEx) {
+				Console.WriteLine("{0}", soapEx.Message);
+				throw;
 			}
 			return availableAddresses;
 		}
 
-		public static void Main (string[] args)
+		public static void Main()
 		{
-
             LoadConfiguration();
             /*
              * Demonstrate getting an address by Postcode and place name/number
@@ -120,63 +125,66 @@ namespace Addressing
              **/
             Console.WriteLine("\n\n\n============================================");
             Console.WriteLine("Calling FindAddressMethod by LN12EU and 7");
-            AddressType addressDetail2 = new AddressType();
+            AddressType AddressDetail;
             try
             {
-                addressDetail2 = FindAddressMethod("LN12EU", "7");
+				AddressDetail = FindAddressMethod("LN12EU", "7");
                 Console.WriteLine("Address details as follows");
-                Console.WriteLine(addressDetail2.CompanyName);
-                Console.WriteLine(addressDetail2.Street);
-                Console.WriteLine(addressDetail2.Locality);
-                Console.WriteLine(addressDetail2.TownCity);
-                Console.WriteLine(addressDetail2.County);
-                Console.WriteLine(addressDetail2.CountryCode);
-                Console.WriteLine(addressDetail2.PostalCode);
+                Console.WriteLine(AddressDetail.CompanyName);
+                Console.WriteLine(AddressDetail.Street);
+                Console.WriteLine(AddressDetail.Locality);
+                Console.WriteLine(AddressDetail.TownCity);
+                Console.WriteLine(AddressDetail.County);
+                Console.WriteLine(AddressDetail.CountryCode);
+                Console.WriteLine(AddressDetail.PostalCode);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+				throw;
             }
 
 			/*
 			 * Demonstrate getting a single address by its key
 			 * 
 			 **/
-			Console.WriteLine ("\n\n\n============================================");
-            Console.WriteLine ("Calling GetAddressByKeyMethod on key 1007");
-            AddressType addressDetail = new AddressType();
+			Console.WriteLine("\n\n\n============================================");
+            Console.WriteLine("Calling GetAddressByKeyMethod on key 1007");
+			AddressType KeyMethodAddress;
 			try {
-                addressDetail = GetAddressByKeyMethod ("LN12EU1007");
-				Console.WriteLine ("Address details as follows");
-				Console.WriteLine (addressDetail.CompanyName);
-				Console.WriteLine (addressDetail.Street);
-				Console.WriteLine (addressDetail.Locality);
-				Console.WriteLine (addressDetail.TownCity);
-				Console.WriteLine (addressDetail.County);
-				Console.WriteLine (addressDetail.CountryCode);
-				Console.WriteLine (addressDetail.PostalCode);
+				KeyMethodAddress = GetAddressByKeyMethod("LN12EU1007");
+				Console.WriteLine("Address details as follows");
+				Console.WriteLine(KeyMethodAddress.CompanyName);
+				Console.WriteLine(KeyMethodAddress.Street);
+				Console.WriteLine(KeyMethodAddress.Locality);
+				Console.WriteLine(KeyMethodAddress.TownCity);
+				Console.WriteLine(KeyMethodAddress.County);
+				Console.WriteLine(KeyMethodAddress.CountryCode);
+				Console.WriteLine(KeyMethodAddress.PostalCode);
 				
-			} catch (Exception ex) {
-				Console.WriteLine (ex.Message);
+			} catch(Exception ex) {
+				Console.WriteLine(ex.Message);
+				throw;
 			}
 
 			/*
 			 * Demonstrate getting a list of address keys by Postcode
 			 * 
 			 **/
-			Console.WriteLine ("\n\n\n============================================");
-            Console.WriteLine ("Calling GetAddressKeysByPostcodeMethod by LN12EU");
+			Console.WriteLine("\n\n\n============================================");
+            Console.WriteLine("Calling GetAddressKeysByPostcodeMethod by LN12EU");
             AddressKeyType[] addressKeyArray = null;
 			try {
-                addressKeyArray = GetAddressKeysByPostcodeMethod ("LN12EU");
+                addressKeyArray = GetAddressKeysByPostcodeMethod("LN12EU");
                 foreach(AddressKeyType key in addressKeyArray){
-                   Console.WriteLine ("Address details as follows");
-                    Console.WriteLine (key.Key);
-                    Console.WriteLine (key.Address);
+                   Console.WriteLine("Address details as follows");
+                    Console.WriteLine(key.Key);
+                    Console.WriteLine(key.Address);
                 }
 				
-			} catch (Exception ex) {
-				Console.WriteLine (ex.Message);
+			} catch(Exception ex) {
+				Console.WriteLine(ex.Message);
+				throw;
 			}
 		}
 	}

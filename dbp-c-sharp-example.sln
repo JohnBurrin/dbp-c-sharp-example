@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking", "Tracking\Tracking.csproj", "{5FBC865C-1886-4562-9DA1-D93523C14422}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Addressing", "Addressing\Addressing.csproj", "{C02D5FEF-55E7-4E3F-A166-25CB89D3244D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping", "Shipping\Shipping.csproj", "{8C337222-90E3-48FF-BF46-B340947F0C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C07062BF-170E-4835-8DB4-AA2683E3A85D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,13 +24,19 @@ Global
 		{5FBC865C-1886-4562-9DA1-D93523C14422}.Debug|x86.Build.0 = Debug|x86
 		{5FBC865C-1886-4562-9DA1-D93523C14422}.Release|x86.ActiveCfg = Release|x86
 		{5FBC865C-1886-4562-9DA1-D93523C14422}.Release|x86.Build.0 = Release|x86
-		{8C337222-90E3-48FF-BF46-B340947F0C18}.Debug|x86.ActiveCfg = Debug|x86
-		{8C337222-90E3-48FF-BF46-B340947F0C18}.Debug|x86.Build.0 = Debug|x86
-		{8C337222-90E3-48FF-BF46-B340947F0C18}.Release|x86.ActiveCfg = Release|x86
-		{8C337222-90E3-48FF-BF46-B340947F0C18}.Release|x86.Build.0 = Release|x86
 		{C02D5FEF-55E7-4E3F-A166-25CB89D3244D}.Debug|x86.ActiveCfg = Debug|x86
 		{C02D5FEF-55E7-4E3F-A166-25CB89D3244D}.Debug|x86.Build.0 = Debug|x86
 		{C02D5FEF-55E7-4E3F-A166-25CB89D3244D}.Release|x86.ActiveCfg = Release|x86
 		{C02D5FEF-55E7-4E3F-A166-25CB89D3244D}.Release|x86.Build.0 = Release|x86
+		{8C337222-90E3-48FF-BF46-B340947F0C18}.Debug|x86.ActiveCfg = Debug|x86
+		{8C337222-90E3-48FF-BF46-B340947F0C18}.Debug|x86.Build.0 = Debug|x86
+		{8C337222-90E3-48FF-BF46-B340947F0C18}.Release|x86.ActiveCfg = Release|x86
+		{8C337222-90E3-48FF-BF46-B340947F0C18}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B7DB50C-1B30-4391-96A6-43716126D224}
 	EndGlobalSection
 EndGlobal
