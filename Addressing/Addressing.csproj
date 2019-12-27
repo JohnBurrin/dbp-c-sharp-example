@@ -71,6 +71,9 @@
     <None Include="configuration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="configuration.xml-template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Web References\api.despatchbay.com\addressing.wsdl" />
     <None Include="Web References\api.despatchbay.com\Reference.map">
