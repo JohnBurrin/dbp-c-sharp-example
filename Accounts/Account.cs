@@ -87,7 +87,7 @@ namespace Accounts
 			MyServices = GetMyServices();
 			foreach (ServiceType key in MyServices)
 			{
-				Console.WriteLine("Service ID: {0}, Courier: {1}, Service Name: {2}, Service Cost: {3}", key.ServiceID, key.Courier.CourierName, key.Name, key.Cost);
+				Console.WriteLine("Serice ID: {0}, Courier: {1}, Service Name: {2}, Service Cost: {3}", key.ServiceID, key.Courier.CourierName, key.Name, key.Cost);
 			}
 
 			AccountBalanceType MyBalance;
@@ -98,7 +98,7 @@ namespace Accounts
 		}
 
 		/// <summary>
-		/// Returns the Current and the Available Balance for the Account
+		/// Returns a Current and the Available Balance fr the Account
 		/// </summary>
 		/// <returns>AccountBalanceType</returns>
 		private static AccountBalanceType GetMyBalance()
