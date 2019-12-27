@@ -57,11 +57,20 @@ namespace Accounts
 		{
 			LoadConfiguration();
 
+			AccountType MyAccount = new AccountType();
+			MyAccount = GetAccount();
+			Console.WriteLine("Account Details details as follows");
+			Console.WriteLine("Account ID: {0}", MyAccount.AccountID);
+			Console.WriteLine("Account Name: {0}", MyAccount.AccountName);
+			Console.WriteLine("Account Balance: {0}", MyAccount.AccountBalance.Balance);
+			Console.WriteLine("Account Available Balance: {0}", MyAccount.AccountBalance.AvailableBalance);
+			Console.WriteLine("\n\n");
+
 			SenderAddressType[] SendersAddresses;
 			SendersAddresses = GetSenderAddresses();
 			foreach (SenderAddressType key in SendersAddresses)
 			{
-				Console.WriteLine("Address details as follows");
+				Console.WriteLine("Collection Address details as follows");
 				Console.WriteLine("Sender Name: {0}", key.SenderName);
 				Console.WriteLine("Sender Email: {0}", key.SenderEmail);
 				Console.WriteLine("Sender Telephone: {0}", key.SenderTelephone);
@@ -73,6 +82,7 @@ namespace Accounts
 				Console.WriteLine(key.SenderAddress.County);
 				Console.WriteLine(key.SenderAddress.CountryCode);
 				Console.WriteLine(key.SenderAddress.PostalCode);
+				Console.WriteLine("\n");
 			}
 
 			PaymentMethodType[] PaymentMethods;
@@ -82,6 +92,7 @@ namespace Accounts
 				Console.WriteLine("Payment Method ID: {0}", key.PaymentMethodID);
 				Console.WriteLine("Payment Method Description: {0}", key.Description);
 			}
+			Console.WriteLine("\n\n");
 
 			ServiceType[] MyServices;
 			MyServices = GetMyServices();
@@ -89,12 +100,33 @@ namespace Accounts
 			{
 				Console.WriteLine("Service ID: {0}, Courier: {1}, Service Name: {2}, Service Cost: {3}", key.ServiceID, key.Courier.CourierName, key.Name, key.Cost);
 			}
+			Console.WriteLine("\n\n");
 
 			AccountBalanceType MyBalance;
 			MyBalance = GetMyBalance();
 			Console.WriteLine("Available Balance: {0}", MyBalance.AvailableBalance);
 			Console.WriteLine("Balance: {0}", MyBalance.Balance);
 
+		}
+
+		/// <summary>
+		/// The Account Service returns some basic information relating to your account
+		/// </summary>
+		/// <returns>AccountType</returns>
+		private static AccountType GetAccount()
+		{
+			AccountType MyAccount = new AccountType();
+			var Service = GetAuthoriseService();
+			try
+			{
+				MyAccount = Service.GetAccount();
+			}
+			catch (Exception soapEx)
+			{
+				Console.WriteLine("{0}", soapEx.Message);
+				throw;
+			}
+			return MyAccount;
 		}
 
 		/// <summary>
