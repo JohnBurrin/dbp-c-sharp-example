@@ -9,11 +9,12 @@ These examples were built using Visual Studio 2019 using DBP API v15
 
 ### How do I get set up? ###
 
-The solution contains three projects: 
+The solution contains four projects: 
 
 * Tracking Api project
 * Addressing Api project 
 * Shipping Api project.
+* Accounts Api project.
 
 Checkout the repo update the configuration files and build all should work, you WILL need a DBP account and an apiuser and an apikey. It won't run with out those.
 
@@ -33,7 +34,7 @@ For example this is a sample shipping configuration.xml
 
 It's VERY basic, and there is little to no error handling.
 
-Despatch Bays's API documentation can be found here https://github.com/despatchbay/api.v15/wiki
+Despatch Bay's API documentation can be found here https://github.com/despatchbay/api.v15/wiki
 
 Despatch Bay now have API rate limiting so during development expect the odd issue as you will probably breach them, you can ask them to up the limit and they'll do it for you.
 
@@ -44,4 +45,6 @@ If that works, use the tracking API to track the shipment you just made, Despatc
 
 The try the Addressing API, bare in mind safe guards have been put in place in Demo mode to prevent abuse. Addressing API will return random addresses and only two Demo couriers are available, but it's enough to get you going.
 
+Finally take a look at the Accounts API, this gives you usefull information about your account, like balance information and collections addresses.
 
+I don't work for Despatch Bay so please don't ask any account related questions because I won't be able to help. If you have any questions related to the API examples I'll try to help where I can. 
