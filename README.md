@@ -27,26 +27,8 @@ For example this is a sample shipping configuration.xml
 <configuration>
 	<apiuser>MyApiUser</apiuser>
 	<apikey>MyApiKey</apikey>
-	<apiendpoint>http://api.despatchbay.com/soap/v15/shipping.php</apiendpoint>
 </configuration>
-
 ```
-
-You can use the same apiuser and key for all the projects, but the endpoint will change.
-Tracking
-
-
-```
-<apiendpoint>http://api.despatchbay.com/soap/v15/tracking.php</apiendpoint>
-```
-
-
-Addressing
-
-```
-<apiendpoint>http://api.despatchbay.com/soap/v14/addressing.php</apiendpoint>
-```
-
 
 
 It's VERY basic, and there is little to no error handling.
