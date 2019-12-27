@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Xml;
-using Addressing.api.despatchbay.com;
+using Addressing.com.despatchbaypro.api;
 
 namespace Addressing
 {
 	class MainClass
 	{
-		private static string apiendpoint;
 		private static string apiuser;
 		private static string apikey;
 		private static AddressingService Service;
@@ -22,7 +21,7 @@ namespace Addressing
 			// Set up some credentials
 			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
 			// Create the service of type Addressing service
-			Service = new AddressingService(apiendpoint)
+			Service = new AddressingService()
 			{
 				RequestEncoding = System.Text.Encoding.UTF8
 			};
@@ -42,8 +41,6 @@ namespace Addressing
 			doc.Load("configuration.xml");
 			XmlNode node;
 			try {
-				node = doc.DocumentElement.SelectSingleNode("/configuration/apiendpoint");
-				apiendpoint = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
 				apiuser = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");

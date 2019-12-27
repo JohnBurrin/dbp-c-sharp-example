@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Shipping.Properties {
+namespace Addressing.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,10 +26,10 @@ namespace Shipping.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://api.despatchbaypro.com/soap/v15/shipping.php")]
-        public string Shipping_com_despatchbaypro_api_ShippingService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://api.despatchbaypro.com/soap/v15/addressing.php")]
+        public string Addressing_com_despatchbaypro_api_AddressingService {
             get {
-                return ((string)(this["Shipping_com_despatchbaypro_api_ShippingService"]));
+                return ((string)(this["Addressing_com_despatchbaypro_api_AddressingService"]));
             }
         }
     }

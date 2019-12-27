@@ -55,7 +55,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Shipping.cs" />
-    <Compile Include="Web References\com.despatchbay.api\Reference.cs">
+    <Compile Include="Web References\com.despatchbaypro.api\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -75,41 +75,23 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\com.despatchbay.api\CollectionDateType.datasource">
+    <None Include="Web References\com.despatchbaypro.api\CollectionDateType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\com.despatchbay.api\CollectionReturnType.datasource">
+    <None Include="Web References\com.despatchbaypro.api\CollectionReturnType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\com.despatchbay.api\Reference.map">
+    <None Include="Web References\com.despatchbaypro.api\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\com.despatchbay.api\ServiceType.datasource">
+    <None Include="Web References\com.despatchbaypro.api\ServiceType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\com.despatchbay.api\ShipmentReturnType.datasource">
+    <None Include="Web References\com.despatchbaypro.api\ShipmentReturnType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\com.despatchbay.api\shipping.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://api.despatchbay.com/soap/v14/shipping.php%3fwsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\api.despatchbay.com</RelPath>
-      <UpdateFromURL>http://api.despatchbay.com/soap/v14/shipping.php?wsdl</UpdateFromURL>
-    </WebReferenceUrl>
-    <WebReferenceUrl Include="http://api.despatchbay.com/soap/v15/shipping%3fwsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\com.despatchbay.api\</RelPath>
-      <UpdateFromURL>http://api.despatchbay.com/soap/v15/shipping%3fwsdl</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Shipping_com_despatchbay_api_ShippingService</CachedSettingsPropName>
-    </WebReferenceUrl>
+    <None Include="Web References\com.despatchbaypro.api\shipping.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -127,6 +109,19 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://api.despatchbaypro.com/soap/v15/shipping.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.despatchbaypro.api\</RelPath>
+      <UpdateFromURL>http://api.despatchbaypro.com/soap/v15/shipping.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Shipping_com_despatchbaypro_api_ShippingService</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

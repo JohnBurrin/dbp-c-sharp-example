@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Tracking.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Tracking_com_despatchbaypro_api_TrackingService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://api.despatchbaypro.com/soap/v15/tracking.php</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

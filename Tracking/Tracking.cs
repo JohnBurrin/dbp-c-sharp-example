@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Xml;
-using Tracking.api.despatchbay.com;
+using Tracking.com.despatchbaypro.api;
 
 namespace Tracking
 {
 	class MainClass
 	{
-		private static string apiendpoint;
 		private static string apiuser;
 		private static string apikey;
 		private static TrackingService Service;
@@ -22,7 +21,7 @@ namespace Tracking
 			// Set up some credentials
 			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
 			// Create the service of type Tracking service
-			Service = new TrackingService(apiendpoint)
+			Service = new TrackingService()
 			{
 				RequestEncoding = System.Text.Encoding.UTF8
 			};
@@ -42,8 +41,6 @@ namespace Tracking
 			doc.Load("configuration.xml");
 			XmlNode node;
 			try {
-				node = doc.DocumentElement.SelectSingleNode("/configuration/apiendpoint");
-				apiendpoint = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
 				apiuser = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");

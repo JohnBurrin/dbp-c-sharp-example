@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Shipping.Properties {
+namespace Tracking.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,10 +26,10 @@ namespace Shipping.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://api.despatchbaypro.com/soap/v15/shipping.php")]
-        public string Shipping_com_despatchbaypro_api_ShippingService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://api.despatchbaypro.com/soap/v15/tracking.php")]
+        public string Tracking_com_despatchbaypro_api_TrackingService {
             get {
-                return ((string)(this["Shipping_com_despatchbaypro_api_ShippingService"]));
+                return ((string)(this["Tracking_com_despatchbaypro_api_TrackingService"]));
             }
         }
     }

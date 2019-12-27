@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Shipping.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Shipping_com_despatchbay_api_ShippingService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://api.despatchbay.com/soap/v15/shipping.php</Value>
+    <Setting Name="Shipping_com_despatchbaypro_api_ShippingService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://api.despatchbaypro.com/soap/v15/shipping.php</Value>
     </Setting>
   </Settings>
 </SettingsFile>

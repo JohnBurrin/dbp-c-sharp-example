@@ -1,14 +1,12 @@
-﻿using Shipping.com.despatchbay.api;
-using System;
+﻿using System;
 using System.Net;
 using System.Xml;
+using Shipping.com.despatchbaypro.api;
 
-
-namespace wsdlConsole
+namespace Shipping
 {
 	class MainClass
 	{
-		private static string apiendpoint;
 		private static string apiuser;
 		private static string apikey;
         private static ShippingService Service;
@@ -45,8 +43,6 @@ namespace wsdlConsole
 
 			try {
 				XmlNode node;
-				node = doc.DocumentElement.SelectSingleNode("/configuration/apiendpoint");
-				apiendpoint = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
 				apiuser = node.InnerText;
 				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");
