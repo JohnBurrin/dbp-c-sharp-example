@@ -16,7 +16,7 @@ namespace Shipping
         /// Basic Auth credentials object and applies to the Service we want to use
         /// </summary>
         /// <returns>The authorise service.</returns>
-        static ShippingService GetAuthoriseService()
+        private static ShippingService GetAuthoriseService()
 		{
 			// Set up some credentials
 			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
@@ -33,10 +33,10 @@ namespace Shipping
 			return Service;
 		}
 
-		/// <summary>
+        /// <summary>
         /// Loads the configuration file and sets some static variables
         /// </summary>
-		static void LoadConfiguration()
+        private static void LoadConfiguration()
         {
 			XmlDocument doc = new XmlDocument();
 			doc.Load("configuration.xml");
@@ -60,7 +60,7 @@ namespace Shipping
         /// </summary>
         /// <returns>an array of ServiceType[] </returns>
         /// <param name="shipment">Shipment.</param>
-        static ServiceType[] GetAvailableServicesMethod(ShipmentRequestType shipment)
+        private static ServiceType[] GetAvailableServicesMethod(ShipmentRequestType shipment)
 		{
 			ServiceType[] availableServices = null;
 			Service = GetAuthoriseService();
@@ -80,7 +80,7 @@ namespace Shipping
         /// </summary>
         /// <param name="shipment"></param>
         /// <returns></returns>
-        static String AddShipmentMethod(ShipmentRequestType shipment)
+        private static String AddShipmentMethod(ShipmentRequestType shipment)
         {
             String ShipmentID = null;
             Service = GetAuthoriseService();
@@ -104,7 +104,7 @@ namespace Shipping
         /// </summary>
         /// <param name="shipments"></param>
         /// <returns></returns>
-        static ShipmentReturnType[] BookShipmentsMethod(String[] shipments)
+        private static ShipmentReturnType[] BookShipmentsMethod(String[] shipments)
         {
             ShipmentReturnType[] BookingResult = null;
             Service = GetAuthoriseService();
@@ -141,13 +141,15 @@ namespace Shipping
                 //shipment.ClientReference = null;
                 //shipment.FollowShipment = null;
 
-                ParcelType Parcel = new ParcelType();
-                Parcel.Height = 10; // This is cm
-                Parcel.Length = 10; // This is cm
-                Parcel.Width = 10;  // This is cm
-                Parcel.Weight = 10; // This is kg
-                Parcel.Value = 100; // This is GBP
-                Parcel.Contents = "New Dress for Klingor";
+                ParcelType Parcel = new ParcelType
+                {
+                    Height = 10, // This is cm
+                    Length = 10, // This is cm
+                    Width = 10,  // This is cm
+                    Weight = 10, // This is kg
+                    Value = 100, // This is GBP
+                    Contents = "New Dress for Klingor"
+                };
 
 
                 // Obviously we could add more parcels here
@@ -157,10 +159,12 @@ namespace Shipping
                 AddressType Address = new AddressType();
 
                 // Receipient Details
-                RecipientAddressType RecipientAddress = new RecipientAddressType();
-                RecipientAddress.RecipientName = "Cprl Klingor";
-                RecipientAddress.RecipientEmail = "klingor@gmail.com";
-                RecipientAddress.RecipientTelephone = "01522 76767676";
+                RecipientAddressType RecipientAddress = new RecipientAddressType
+                {
+                    RecipientName = "Cprl Klingor",
+                    RecipientEmail = "klingor@gmail.com",
+                    RecipientTelephone = "01522 76767676"
+                };
 
                 Address.CompanyName = "The SaleGroup";
                 Address.Street = "Unit 6 The Regatta";
@@ -172,11 +176,17 @@ namespace Shipping
 
                 RecipientAddress.RecipientAddress = Address;
 
-    			SenderAddressType SenderAddress = new SenderAddressType();
-                SenderAddress.SenderName = "Hawkeye Pearce";
-                SenderAddress.SenderEmail = "john.burrin@thesalegroup.co.uk";
-                SenderAddress.SenderTelephone = "01522 000000";
+                // Senders details
+                // Despatch bay lets you send parcels from an "Away Address", 
+                // but you could pull this from the account API, which is the preferred method
+                SenderAddressType SenderAddress = new SenderAddressType
+                {
+                    SenderName = "Hawkeye Pearce",
+                    SenderEmail = "john.burrin@thesalegroup.co.uk",
+                    SenderTelephone = "01522 000000"
+                };
 
+                Address = new AddressType(); // clear the address to reuse the object
                 Address.Street = "West Parade ";
                 Address.TownCity = "Lincoln";
                 Address.PostalCode = "LN1 1YP";
@@ -212,11 +222,13 @@ namespace Shipping
 
                 Shipment.ClientReference = "Dummy Client Ref";
                 // We need a collection Date
-                CollectionDateType CollectionDate = new CollectionDateType();
+                CollectionDateType CollectionDate = new CollectionDateType
+                {
 
-                // Set the Collection date for tomorrow 
-                CollectionDate.CollectionDate = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd");
- 
+                    // Set the Collection date for tomorrow 
+                    CollectionDate = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")
+                };
+
                 Shipment.CollectionDate = CollectionDate;
 
                 // Add Shipment

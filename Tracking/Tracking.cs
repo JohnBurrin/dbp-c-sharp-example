@@ -16,7 +16,7 @@ namespace Tracking
 		/// Basic Auth credentials object and applies to the Service we want to use
 		/// </summary>
 		/// <returns>The authorise service.</returns>
-		static TrackingService GetAuthoriseService()
+		private static TrackingService GetAuthoriseService()
 		{
 			// Set up some credentials
 			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
@@ -35,7 +35,7 @@ namespace Tracking
         /// <summary>
         /// Loads the configuration file and sets some static variables
         /// </summary>
-		static void LoadConfiguration()
+		private static void LoadConfiguration()
 		{
 			XmlDocument doc = new XmlDocument();
 			doc.Load("configuration.xml");
@@ -52,11 +52,11 @@ namespace Tracking
 		}
 
 		/// <summary>
-        /// Gets the tracking method.
-        /// </summary>
-        /// <returns>TrackingReturnType</returns>
-        /// <param name="trackingcode">Trackingcode.</param>
-        public static TrackingReturnType GetTrackingMethod(string trackingcode)
+		/// Gets the tracking method.
+		/// </summary>
+		/// <returns>TrackingReturnType</returns>
+		/// <param name="trackingcode">Trackingcode.</param>
+		private static TrackingReturnType GetTrackingMethod(string trackingcode)
 		{
             TrackingReturnType trackingDetail = new TrackingReturnType();
 			Service = GetAuthoriseService();

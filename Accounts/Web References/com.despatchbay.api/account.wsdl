@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:despatchbay" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:despatchbay" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:despatchbay">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="AccountType">
+        <xsd:all>
+          <xsd:element name="AccountID" type="xsd:int" />
+          <xsd:element name="AccountName" type="xsd:string" />
+          <xsd:element name="AccountBalance" type="tns:AccountBalanceType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AccountBalanceType">
+        <xsd:all>
+          <xsd:element name="Balance" type="xsd:float" />
+          <xsd:element name="AvailableBalance" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AddressType">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="CompanyName" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Street" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Locality" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="TownCity" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="County" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="PostalCode" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="CountryCode" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SenderAddressType">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="SenderName" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="SenderTelephone" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="SenderEmail" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="SenderAddress" type="tns:AddressType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SenderAddressID" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSenderAddressType">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:SenderAddressType[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="CourierType">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="CourierID" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="CourierName" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ServiceType">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="ServiceID" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Format" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Name" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Cost" type="xsd:float" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Courier" type="tns:CourierType" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfServiceType">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:ServiceType[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="PaymentMethodType">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="PaymentMethodID" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Type" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Description" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPaymentMethodType">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:PaymentMethodType[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="AutomaticTopupsSettingsRequestType">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="MinimumBalance" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="TopupAmount" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="PaymentMethodID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAccountRequest" />
+  <wsdl:message name="GetAccountResponse">
+    <wsdl:part name="return" type="tns:AccountType" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountBalanceRequest" />
+  <wsdl:message name="GetAccountBalanceResponse">
+    <wsdl:part name="return" type="tns:AccountBalanceType" />
+  </wsdl:message>
+  <wsdl:message name="GetSenderAddressesRequest" />
+  <wsdl:message name="GetSenderAddressesResponse">
+    <wsdl:part name="return" type="tns:ArrayOfSenderAddressType" />
+  </wsdl:message>
+  <wsdl:message name="GetServicesRequest" />
+  <wsdl:message name="GetServicesResponse">
+    <wsdl:part name="return" type="tns:ArrayOfServiceType" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsRequest" />
+  <wsdl:message name="GetPaymentMethodsResponse">
+    <wsdl:part name="return" type="tns:ArrayOfPaymentMethodType" />
+  </wsdl:message>
+  <wsdl:message name="DisableAutomaticTopupsRequest" />
+  <wsdl:message name="DisableAutomaticTopupsResponse">
+    <wsdl:part name="return" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="EnableAutomaticTopupsRequest">
+    <wsdl:part name="AutomaticTopupsSettings" type="tns:AutomaticTopupsSettingsRequestType" />
+  </wsdl:message>
+  <wsdl:message name="EnableAutomaticTopupsResponse">
+    <wsdl:part name="return" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="AccountServicePortType">
+    <wsdl:operation name="GetAccount">
+      <documentation>Returns your account information</documentation>
+      <wsdl:input message="tns:GetAccountRequest" />
+      <wsdl:output message="tns:GetAccountResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <documentation>Returns your current account balance and available balance</documentation>
+      <wsdl:input message="tns:GetAccountBalanceRequest" />
+      <wsdl:output message="tns:GetAccountBalanceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSenderAddresses">
+      <documentation>Returns your currently active collection / sender addresses</documentation>
+      <wsdl:input message="tns:GetSenderAddressesRequest" />
+      <wsdl:output message="tns:GetSenderAddressesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <documentation>Returns services available (allowed and enabled) for use</documentation>
+      <wsdl:input message="tns:GetServicesRequest" />
+      <wsdl:output message="tns:GetServicesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentMethods">
+      <documentation>Returns registered payment methods</documentation>
+      <wsdl:input message="tns:GetPaymentMethodsRequest" />
+      <wsdl:output message="tns:GetPaymentMethodsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DisableAutomaticTopups">
+      <documentation>Disables automatic top-ups</documentation>
+      <wsdl:input message="tns:DisableAutomaticTopupsRequest" />
+      <wsdl:output message="tns:DisableAutomaticTopupsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="EnableAutomaticTopups">
+      <documentation>Enables automatic top-ups</documentation>
+      <wsdl:input message="tns:EnableAutomaticTopupsRequest" />
+      <wsdl:output message="tns:EnableAutomaticTopupsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountServiceBinding" type="tns:AccountServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetAccount">
+      <soap:operation soapAction="urn:despatchbay#GetAccount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <soap:operation soapAction="urn:despatchbay#GetAccountBalance" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSenderAddresses">
+      <soap:operation soapAction="urn:despatchbay#GetSenderAddresses" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <soap:operation soapAction="urn:despatchbay#GetServices" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentMethods">
+      <soap:operation soapAction="urn:despatchbay#GetPaymentMethods" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DisableAutomaticTopups">
+      <soap:operation soapAction="urn:despatchbay#DisableAutomaticTopups" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnableAutomaticTopups">
+      <soap:operation soapAction="urn:despatchbay#EnableAutomaticTopups" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:despatchbay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountService">
+    <wsdl:port name="AccountServicePort" binding="tns:AccountServiceBinding">
+      <soap:address location="http://api.despatchbay.com/soap/v15/account.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

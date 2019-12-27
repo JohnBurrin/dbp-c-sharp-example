@@ -32,10 +32,10 @@ namespace Addressing
 			return Service;
 		}
 
-        /// <summary>
-        /// Loads the configuration file and sets some static variables
-        /// </summary>
-		static void LoadConfiguration()
+		/// <summary>
+		/// Loads the configuration file and sets some static variables
+		/// </summary>
+		private static void LoadConfiguration()
 		{
 			XmlDocument doc = new XmlDocument();
 			doc.Load("configuration.xml");
@@ -52,13 +52,13 @@ namespace Addressing
 		}
 
 
-        /// <summary>
-        /// Finds the address method.
-        /// </summary>
-        /// <returns>The address method.</returns>
-        /// <param name="postcode">Postcode.</param>
-        /// <param name="place">Place.</param>
-        public static AddressType FindAddressMethod(string postcode, string place)
+		/// <summary>
+		/// Finds the address method.
+		/// </summary>
+		/// <returns>The address method.</returns>
+		/// <param name="postcode">Postcode.</param>
+		/// <param name="place">Place.</param>
+		private static AddressType FindAddressMethod(string postcode, string place)
         {
             AddressType Address = new AddressType();
             Service = GetAuthoriseService();
@@ -80,7 +80,7 @@ namespace Addressing
 		/// </summary>
 		/// <returns>The domestic address by key method.</returns>
 		/// <param name="key">Key.</param>
-		public static AddressType GetAddressByKeyMethod(string key)
+		private static AddressType GetAddressByKeyMethod(string key)
 		{
             AddressType Address = new AddressType();
 			var Service = GetAuthoriseService();
@@ -99,7 +99,7 @@ namespace Addressing
         /// </summary>
         /// <returns>The domestic address keys by postcode method.</returns>
         /// <param name="postcode">Postcode.</param>
-        public static AddressKeyType[] GetAddressKeysByPostcodeMethod(string postcode)
+        private static AddressKeyType[] GetAddressKeysByPostcodeMethod(string postcode)
 		{
 			AddressKeyType[] availableAddresses;
 			Service = GetAuthoriseService();
