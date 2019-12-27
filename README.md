@@ -38,7 +38,7 @@ Despatch Bays's API documentation can be found here https://github.com/despatchb
 Despatch Bay now have API rate limiting so during development expect the odd issue as you will probably breach them, you can ask them to up the limit and they'll do it for you.
 
 My advice is to set up a demo account and try the shipping example, a nice feature of the shipping API is that it will return a label url, somthing like https://api.despatchbay.com/documents/v1/labels/ds2IumDG2AlqVU
-which you can then either curl or pop straight in to a browser.
+which you can then either curl or pop straight in to a browser. (for more information see https://github.com/despatchbay/despatchbay-api-v15/wiki/Documents-API)
 
 If that works, use the tracking API to track the shipment you just made, Despatch Bay's demo mode will fake the tracking for you to test.
 
