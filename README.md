@@ -1,6 +1,6 @@
 # Despatch Bay API examples in C# #
 
-Simple C# implementation of the Despatch Bay Pro API, this implementation is not considered be production safe, so be warned.
+Simple C# implementation of the Despatch Bay Pro API, this implementation is not to be considered be production safe, so be warned.
 
 I would recommend checking this out and seeing if it will compile without updating the Web References, 
 
