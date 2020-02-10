@@ -5,10 +5,10 @@ using Shipping.com.despatchbaypro.api;
 
 namespace Shipping
 {
-	class MainClass
-	{
-		private static string apiuser;
-		private static string apikey;
+    class MainClass
+    {
+        private static string apiuser;
+        private static string apikey;
         private static ShippingService Service;
 
         /// <summary>
@@ -17,9 +17,9 @@ namespace Shipping
         /// </summary>
         /// <returns>The authorise service.</returns>
         private static ShippingService GetAuthoriseService()
-		{
-			// Set up some credentials
-			NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
+        {
+            // Set up some credentials
+            NetworkCredential netCredential = new NetworkCredential(apiuser, apikey);
 
             // Create the service of type Shipping service
             Service = new ShippingService
@@ -27,31 +27,31 @@ namespace Shipping
                 RequestEncoding = System.Text.Encoding.UTF8
             };
             Uri uri = new Uri(Service.Url);
-			ICredentials credentials = netCredential.GetCredential(uri, "Basic");
-			// Apply the credentials to the service
-			Service.Credentials = credentials;
-			return Service;
-		}
+            ICredentials credentials = netCredential.GetCredential(uri, "Basic");
+            // Apply the credentials to the service
+            Service.Credentials = credentials;
+            return Service;
+        }
 
         /// <summary>
         /// Loads the configuration file and sets some static variables
         /// </summary>
         private static void LoadConfiguration()
         {
-			XmlDocument doc = new XmlDocument();
-			doc.Load("configuration.xml");
+            XmlDocument doc = new XmlDocument();
+            doc.Load("configuration.xml");
 
-			try {
-				XmlNode node;
-				node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
-				apiuser = node.InnerText;
-				node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");
-				apikey = node.InnerText;
-			} catch(Exception ex) {
-				Console.WriteLine(ex.Message);
+            try {
+                XmlNode node;
+                node = doc.DocumentElement.SelectSingleNode("/configuration/apiuser");
+                apiuser = node.InnerText;
+                node = doc.DocumentElement.SelectSingleNode("/configuration/apikey");
+                apikey = node.InnerText;
+            } catch(Exception ex) {
+                Console.WriteLine(ex.Message);
                 throw;
             }
-		}
+        }
 
 
         /// <summary>
@@ -61,19 +61,19 @@ namespace Shipping
         /// <returns>an array of ServiceType[] </returns>
         /// <param name="shipment">Shipment.</param>
         private static ServiceType[] GetAvailableServicesMethod(ShipmentRequestType shipment)
-		{
-			ServiceType[] availableServices = null;
-			Service = GetAuthoriseService();
-			try {
-				// Call the GetDomesticServices soap service
-				availableServices = Service.GetAvailableServices(shipment);
+        {
+            ServiceType[] availableServices = null;
+            Service = GetAuthoriseService();
+            try {
+                // Call the GetDomesticServices soap service
+                availableServices = Service.GetAvailableServices(shipment);
 
-			} catch(Exception soapEx) {
-				Console.WriteLine("{0}", soapEx.Message);
+            } catch(Exception soapEx) {
+                Console.WriteLine("{0}", soapEx.Message);
                 throw;
             }
-			return availableServices;
-		}
+            return availableServices;
+        }
 
         /// <summary>
         /// Add a Shipment Method
@@ -128,13 +128,13 @@ namespace Shipping
         /// Example to Get available services, Add a shipment to the account and the book the collection
         /// </summary>
         public static void Main()
-		{
-			LoadConfiguration();
+        {
+            LoadConfiguration();
 
-			int count = 0;
-			ServiceType[] availableServices = null;
+            int count = 0;
+            ServiceType[] availableServices = null;
 
-			try {
+            try {
                 // First we need to build a shipment request object
                 ShipmentRequestType Shipment = new ShipmentRequestType();
                 //shipment.ServiceID = null;
@@ -203,10 +203,10 @@ namespace Shipping
                 // Call the service
                 availableServices = GetAvailableServicesMethod(Shipment);
 
-				// iterate though the list of returned services
-				count = 0;
-				foreach(ServiceType element in availableServices) {
-					count += 1;
+                // iterate though the list of returned services
+                count = 0;
+                foreach(ServiceType element in availableServices) {
+                    count += 1;
                     if(count == 1)
                     {
                         // Manually apply the First service
@@ -216,8 +216,8 @@ namespace Shipping
                         // if ServiceIDSpecified is Not set to true;
                         Shipment.ServiceIDSpecified = true;
                     }
-					System.Console.WriteLine("Service id:{0} - {1} £{2}", element.ServiceID, element.Name, element.Cost);
-				}
+                    System.Console.WriteLine("Service id:{0} - {1} £{2}", element.ServiceID, element.Name, element.Cost);
+                }
                 
 
                 Shipment.ClientReference = "Dummy Client Ref";
@@ -250,9 +250,9 @@ namespace Shipping
                     System.Console.WriteLine("Service id:{0} - ShipmentID {1} - Label Url{2}", element.ServiceID,element.ShipmentID, element.LabelsURL);
                 }
             } catch(Exception ex) {
-				Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
                 throw;
             }
-		}
-	}
+        }
+    }
 }
